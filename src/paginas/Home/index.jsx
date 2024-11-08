@@ -25,6 +25,12 @@ function Home() {
   const limit = propiedadesPorPagina;
   const offset = (currentPage - 1) * limit;
 
+  //efecto para iniciar la pagina desde la parte SUPERIOR
+  useEffect(() => {
+    // Desplaza la página hacia la parte superior cuando el componente se monta
+    window.scrollTo(0, 0);
+  }, []); // El array vacío asegura que se ejecute solo al montar el componente
+
   // Efecto para manejar la paginación y los filtros
   useEffect(() => {
     dispatch(getProps(limit, offset, operacion, tipoPropiedad, precioMin, precioMax));
@@ -53,6 +59,7 @@ function Home() {
                 setPrecioMax={setPrecioMax}
               />
             </div>
+            {/* lista props y pag */}
             <div className='cont-listaProps-Y-paginacion'>
               <h1 className='titulo-lista-props'>Conocé nuestras Propiedades</h1>
               <ListaPropiedades allProps={allProps} id='listaProps' />
