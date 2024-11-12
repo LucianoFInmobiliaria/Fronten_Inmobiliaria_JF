@@ -6,7 +6,11 @@ import './estilos.css';
 function FormularioProp() {
 
     //tipo de propiedad
-    const tipoProps = ['Casa', 'Departamento', 'PH', 'Terreno', 'Local', 'Oficina', 'Cochera', 'Galpón', 'Depósito', 'Quinta', 'Campo'];
+    const tipoProps = [
+        'Casa', 'Departamento', 'PH', 'Oficina',
+        'Local', 'Cochera', 'Galpón', 
+        'Terreno', 'Quinta', 'Campo',
+    ];
 
     const [data, setData] = useState({
         tituloPublicacion: '',
@@ -76,6 +80,16 @@ function FormularioProp() {
     };
     //valida vista 3
     const validaDatosVista3 = () => {
+        if(
+            data.tipoPropiedad === 'Terreno' ||
+            data.tipoPropiedad === 'Cochera' ||
+            data.tipoPropiedad === 'Local' ||
+            data.tipoPropiedad === 'Quinta' ||
+            data.tipoPropiedad === 'Campo' ||
+            data.tipoPropiedad === 'Galpón'
+        ){
+            return true;
+        }
         return data.ambientes
             && data.dormitorios
             && data.baños
@@ -144,10 +158,10 @@ function FormularioProp() {
         setMonedaAlq(e.target.value);
     };
     const handleOnChangePrecioVenta = (e) => {
-        setPrecioVenta(e.target.value);
+        setPrecioVenta(Number(e.target.value));
     };
     const handleOnChangePrecioAlq = (e) => {
-        setPrecioAlq(e.target.value);
+        setPrecioAlq(Number(e.target.value));
     };
     const handleOnChangeImgs = (e) => {
         const filesArray = Array.from(e.target.files); //convierto e.target.files en un array
@@ -281,6 +295,15 @@ function FormularioProp() {
                 setVideos();
                 setVistaPreviaVideo([]);
                 setServicios([]);
+                //quitar la seleccion de los checkbox
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = false;
+                });
+                setVista1(true);
+                setVista2(false);
+                setVista3(false);
+                setVista4(false);
             }else{
                 alert('Error al crear la propiedad');
             }
@@ -590,14 +613,12 @@ function FormularioProp() {
                             <div className='cont-amb'>
                                 <div style={{ 'display': 'flex', 'justifyContent': 'start', 'alignItems': 'center' }}>
                                     <label className='label-crea-prop'>Sup semicub</label>
-                                    <p style={{ 'margin': '0', 'color': 'red', 'fontSize': '23px' }}>*</p>
                                 </div>
                                 <input type='number' id='supSemiCub' value={data.supSemiCub} onChange={(e) => { handleOnChangeData(e) }} className='input-tituloPublicacion' />
                             </div>
                             <div className='cont-amb'>
                                 <div style={{ 'display': 'flex', 'justifyContent': 'start', 'alignItems': 'center' }}>
                                     <label className='label-crea-prop'>Sup decubierta</label>
-                                    <p style={{ 'margin': '0', 'color': 'red', 'fontSize': '23px' }}>*</p>
                                 </div>
                                 <input type='number' id='supDescubierta' value={data.supDescubierta} onChange={(e) => { handleOnChangeData(e) }} className='input-tituloPublicacion' />
                             </div>
@@ -653,10 +674,11 @@ function FormularioProp() {
                 {/* vista-4*/}
                 <div className={vista4 ? 'vista-4' : 'notVista4'} id='vista-4'>
                     <div className='cont-data-vista-2'>
+                        {/* servicios */}
                         <div className='cont-servicios'>
                             <p className='titulo-servicio'>Servicios</p>
                             <div className='cont-amb'>
-                                <label className='label-crea-prop'>Luz eléctric</label>
+                                <label className='label-crea-prop'>Luz eléctrica</label>
                                 <input type='checkbox' id='luz' value={"luz"}  onChange={(e) => { handleOnChangeServicios(e) }} className='check-luz' />
                             </div>
                             <div className='cont-amb'>

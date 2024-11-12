@@ -7,6 +7,7 @@ import IconoSup from '../../imagenes/Iconos/IconoSup';
 import IconoAmb from '../../imagenes/Iconos/IconoAmb';
 import IconoDormitorio from '../../imagenes/Iconos/IconoDormitorios';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import WcIcon from '@mui/icons-material/Wc';
 import './styles.css'
 
 function Card({ 
@@ -18,10 +19,14 @@ function Card({
     cantCocheras,
     ambientes, 
     dormitorios, 
-    unidadMedida, 
-    tipoPropiedad 
+    tipoPropiedad,
+    supTotal,
+    supDescubierta,
+    supCubierta,
+    supSemiCub ,
+    baños
 }) {
-
+console.log("tipoPropiedad", tipoPropiedad);
     //estado para el hover
     const [showDetail, setShowDetail] = useState(false);
 
@@ -78,7 +83,7 @@ function Card({
                             tituloPublicacion={tituloPublicacion}
                             ambientes={ambientes}
                             dormitorios={dormitorios}
-                            unidadMedida={unidadMedida}
+                            unidadMedida={'m2'}
                             tipo={tipoPropiedad}
                         />
                     </div>
@@ -87,20 +92,20 @@ function Card({
             
             {/* info 2 */}
             <div className='card-info2'>
+                {/* sup total  común para todas las props*/}
                 <div className='div-info2'>
                     <IconoSup />                    
-                    <p className='info2'>Superficie</p>
-                    <p className='info2'>{unidadMedida}</p>
+                    <p className='info2'>Sup Tot</p>
+                    <p className='info2'>{supTotal}m2</p>
                 </div>
-
+                {/* casa, depto, ph */}
                 {
-                    tipoPropiedad !== "Terreno" 
-                    && tipoPropiedad !== "Local"
-                    && tipoPropiedad !== "Cochera"
-                    && tipoPropiedad !== "Quinta"
-                    && tipoPropiedad !== "Campo" ? 
-                    (
-                        <>
+                    tipoPropiedad === "Casa" 
+                    || tipoPropiedad === "Departamento"
+                    || tipoPropiedad === "PH" 
+                    || tipoPropiedad === "Oficina" ?
+                        (
+                            <>
                             <div className='div-info2'>
                                 <IconoAmb />
                                 <p className='info2'>Ambientes</p>
@@ -119,9 +124,54 @@ function Card({
                                 <p className='info2'>{cantCocheras}</p>
                             </div>
                         </>
-                    ) : (
-                        <></>
-                    )
+                        ) : null
+                }
+                {/* local, cochera, galpón */}
+                {
+                    tipoPropiedad === "Local" 
+                    || tipoPropiedad === "Cocher"
+                    || tipoPropiedad === "Galpón" ?
+                        <>
+                            <div className='div-info2'>
+                                <IconoSup />
+                                <p className='info2'>Sup Desc</p>
+                                <p className='info2'>{supDescubierta}m2</p>
+                            </div>
+                            <div className='div-info2'>
+                                <IconoSup />
+                                <p className='info2'>Sup Cub</p>
+                                <p className='info2'>{supCubierta}m2</p>
+                            </div>
+                            <div className='div-info2'>
+                                <WcIcon sx={{'color': 'rgba(171, 132, 94, 1)'}}/>
+                                <p className='info2'>Baños</p>
+                                <p className='info2'>{baños}m2</p>
+                            </div>                            
+                        </> : null
+                    
+                }
+                {/* terreno, quinta, campo */}
+                {
+                    tipoPropiedad === "Terreno" 
+                    || tipoPropiedad === "Quinta"
+                    || tipoPropiedad === "Campo" ?
+                        <>
+                            <div className='div-info2'>
+                                <IconoSup />
+                                <p className='info2'>Sup Cub</p>
+                                <p className='info2'>{supCubierta}m2</p>
+                            </div>
+                            <div className='div-info2'>
+                                <IconoSup />
+                                <p className='info2'>Sup SemiC</p>
+                                <p className='info2'>{supSemiCub}m2</p>
+                            </div>                            
+                            <div className='div-info2'>
+                                <IconoSup />
+                                <p className='info2'>Sup SemiC</p>
+                                <p className='info2'>{supSemiCub}m2</p>
+                            </div>
+                        </> : null
                 }
             </div>
         </div>
