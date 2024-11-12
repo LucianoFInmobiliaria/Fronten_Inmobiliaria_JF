@@ -118,17 +118,6 @@ function FormularioProp() {
         const { value, checked } = e.target;
         if(checked){
             setOpVenta(value);
-            setOperacion([
-                ...operacion, 
-                {
-                    tipoOperacion: value,
-                    moneda: monedaVenta,
-                    precio: precioVenta,
-                }
-            ]);
-        }else{
-            setOpVenta('');
-            setPrecioVenta(0);
         }
     };
     const handleOnChangeOpAlquiler = (e) => {
@@ -184,10 +173,22 @@ function FormularioProp() {
             checked ? [...prevServicios, value] : prevServicios.filter(s => s !== value)
         );
     };
-    //btns vista 1
+    //btns vista 1 y actualizo operacion
     const onClickSgtVista1 = () => {
         setVista1(false);
         setVista2(true);
+
+        //actualizo operacion
+        if(opVenta){
+            setOperacion([
+                ...operacion, 
+                {
+                    tipoOperacion: opVenta,
+                    moneda: monedaVenta,
+                    precio: precioVenta,
+                }
+            ]);
+        }
     };
     //btns vista 2
     const onClickAtrasVista2 = () => {
@@ -243,6 +244,43 @@ function FormularioProp() {
             
             if(response.ok){
                 alert('Propiedad creada con éxito');
+                //limpio
+                setData({
+                    tituloPublicacion: '',
+                    descripcion: '',
+                    tipoPropiedad: '',
+                    expesnsas: '',       
+                    cantPisos: 0,
+                    ambientes: 0,
+                    dormitorios: 0,
+                    baños: 0,
+                    supCubierta: 0,
+                    supSemiCub: 0,
+                    supDescubierta: 0,
+                    supTotal: 0,
+                    estado: '',
+                    antiguedad: 0,
+                    cantCocheras: 0,
+                });
+                setOpVenta('');
+                setOpAlquiler('');
+                setMonedaVenta('U$D');
+                setMonedaAlq('$');
+                setPrecioVenta(0);
+                setPrecioAlq(0);
+                setOperacion([]);
+                setUbicacion({
+                    direccionPublicacion: '',
+                    direccionReal: '',
+                    barrio: '',
+                    ciudad: '',
+                    provincia: '',
+                });
+                setImagenes([]);
+                setVistaPrevia([]);
+                setVideos();
+                setVistaPreviaVideo([]);
+                setServicios([]);
             }else{
                 alert('Error al crear la propiedad');
             }

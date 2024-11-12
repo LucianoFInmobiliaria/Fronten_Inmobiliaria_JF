@@ -9,7 +9,18 @@ import IconoDormitorio from '../../imagenes/Iconos/IconoDormitorios';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import './styles.css'
 
-function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublicacion, ambientes, dormitorios, unidadMedida, tipo }) {
+function Card({ 
+    id, 
+    tituloPublicacion,
+    ubicacion,
+    operacion,
+    imagenes,
+    cantCocheras,
+    ambientes, 
+    dormitorios, 
+    unidadMedida, 
+    tipoPropiedad 
+}) {
 
     //estado para el hover
     const [showDetail, setShowDetail] = useState(false);
@@ -18,7 +29,7 @@ function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublica
         <div className='contCard'>
             {/* titulo */}
             <div className='card-title'>
-                <h2 className='titulo-card'>{operacion[0].operacion}</h2>
+                <h2 className='titulo-card'>{operacion[0].tipoOperacion}</h2>
             </div>
 
             {/* img + animacion + abre detalle */}
@@ -29,7 +40,7 @@ function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublica
                 >
                     {/* imagen */}
                     <div className='card-image'>
-                        <img src={imagenes[0].original} alt='not found' className='card-img' />
+                        <img src={imagenes[0]} alt='not found' className='card-img' />
                     </div>
 
                     {/* msj detalle si hay hover */}
@@ -39,7 +50,7 @@ function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublica
                 </div>
             </NavLink>
 
-            {/* info 1 */}
+            {/* Titulo - direcc -  */}
             <div className='card-info1'>
                 <div className='cont-titulo-publicacion'>
                     <span className='tituloPublicacion'>{tituloPublicacion}</span>
@@ -47,20 +58,20 @@ function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublica
                 <div className='cont-info1'>
                     <LocationOnIcon />
                     <span className='direccion-card'>
-                        {/* Barrio: {ubicacion.barrio} | */} {direccionF}
+                        {ubicacion.direccionPublicacion}
                     </span>
                 </div>
 
                 <div className='cont-precio-fav'>
                     <div className='cont-precio'>
                         <p className='precio'>
-                            {operacion[0].precios[0].moneda} {formatMoney(operacion[0].precios[0].precio)}
+                            {operacion[0].moneda} {formatMoney(operacion[0].precio)}
                         </p>
                     </div>
                     <div className='cont-fav'>
                         <Favorito 
                             id={id}
-                            direccionF={direccionF}
+                            direccionF={ubicacion.direccionPublicacion}
                             cantCocheras={cantCocheras}
                             operacion={operacion}
                             imagenes={imagenes}
@@ -68,7 +79,7 @@ function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublica
                             ambientes={ambientes}
                             dormitorios={dormitorios}
                             unidadMedida={unidadMedida}
-                            tipo={tipo}
+                            tipo={tipoPropiedad}
                         />
                     </div>
                 </div>
@@ -83,7 +94,12 @@ function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublica
                 </div>
 
                 {
-                    tipo.name !== "Terreno" && (
+                    tipoPropiedad !== "Terreno" 
+                    && tipoPropiedad !== "Local"
+                    && tipoPropiedad !== "Cochera"
+                    && tipoPropiedad !== "Quinta"
+                    && tipoPropiedad !== "Campo" ? 
+                    (
                         <>
                             <div className='div-info2'>
                                 <IconoAmb />
@@ -103,6 +119,8 @@ function Card({ id, direccionF, cantCocheras, operacion, imagenes, tituloPublica
                                 <p className='info2'>{cantCocheras}</p>
                             </div>
                         </>
+                    ) : (
+                        <></>
                     )
                 }
             </div>

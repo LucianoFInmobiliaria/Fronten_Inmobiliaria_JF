@@ -1,11 +1,11 @@
 import axios from "axios";
 import { 
-    LOGIN, RESET_LOGIN, GET_PROPERTY,  GET_PROPS, IS_OPEN_MODAL_PICTURE, LOADING, MUESTRA_DESTACADAS, RESET_PROPERTY,   
+    LOGIN, RESET_LOGIN, GET_PROPERTY,  GET_PROPS, IS_OPEN_MODAL_PICTURE, LOADING, MUESTRA_DESTACADAS, RESET_PROPERTY, 
 } from "./actionType.js";
 import { actual } from "../../urls";
 
 //---LOGIN--------------------------------------------------------
-export function login(data){ console.log("enetré")
+export function login(data){
     return async function (dispatch) {
         const resp = await axios.post(`${actual}/auth/login`, data); 
         //asigno data del user al localStorage
